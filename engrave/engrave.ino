@@ -10,14 +10,19 @@ void setup() {
   ble.begin(9600);
   digitalWrite(12,HIGH);
   servo.attach(9);
-  servo.write(120);
+  servo.write(142);
 }
 
 
 String op = "";
 
 void loop() {
-
+//  
+//    servo.write(142);
+//    delay(700);
+//    servo.write(148);
+//    delay(700);
+//    return;
   
  if( ble.available() > 0 ){
     op += char(ble.read());
@@ -39,9 +44,9 @@ void loop() {
     ble.println("begin");
     ble.println(x);
 
-    servo.write(130);
+    servo.write(148);
     delay(x);
-    servo.write(120);
+    servo.write(142);
     //ble.println("svgfinish");
   }
   op = "";

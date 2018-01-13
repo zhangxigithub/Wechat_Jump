@@ -57,7 +57,7 @@ class ViewController: NSViewController,EngraveRobotDelegate
         let y2 =  preview!.targetPosition!.y
         print(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)))
         
-        let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)))
+        let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)) * 1.2)
         
         let op = String(format:"m%4d#",value)
         robot.send(message: op)
@@ -70,66 +70,7 @@ class ViewController: NSViewController,EngraveRobotDelegate
     }
     
     @IBAction func test(_ sender: Any) {
-        
-        self.preview?.getImage()
-    
-//        let i = preview?.snapshot
-//
-//        guard let rep = preview?.bitmapImageRepForCachingDisplay(in: preview!.bounds) else{return}
-//
-//        let w        = rep.pixelsWide
-//        let h        = rep.pixelsHigh
-//        let rowBytes = rep.bytesPerRow
-//        var bitmapByteCount = (rowBytes * h)
-//
-//        var pixel_value: Int = 0
-//        let color = rep.colorAt(x: 10, y: 10)
-//
-//
-//        var pixel = rep.bitmapData!
-//        //print(rep.bitmapData)
-//
-//        for row in 720..<h
-//        {
-//            for x in 0..<w
-//            {
-//                let offset = 4 * x * row
-//                print(pixel[offset])
-//            }
-//        }
-//
-//        print("w:\(w),h:\(h)  \(color)")
-//
-        /*
-         int width = [imageRep pixelsWide];
-         int height = [imageRep pixelsHight];
-         int rowBytes = [imageRep bytesPerRow];
-         char* pixels = [imageRep bitmapData];
-         int row, col;
-         for (row = 0; row < height; row++)
-         {
-         unsigned char* rowStart = (unsigned char*)(pixels + (row * rowBytes));
-         unsigned char* nextChannel = rowStart;
-         for (col = 0; col < width; col++)
-         {
-         unsigned char red, green, blue, alpha;
-         
-         red = *nextChannel;
-         nextChannel++;
-         green = *nextChannel;
-         nextChannel++;
-         // ...etc...
-         }
-         }
-         
-         
-         let viewToCapture = self.window!.contentView!
-         let rep = viewToCapture.bitmapImageRepForCachingDisplayInRect(viewToCapture.bounds)!
-         viewToCapture.cacheDisplayInRect(viewToCapture.bounds, toBitmapImageRep: rep)
-         
-         let img = NSImage(size: viewToCapture.bounds.size)
-         img.addRepresentation(rep)
-         */
+        self.preview?.detect()
     }
     
     @IBAction func step(_ sender: Any) {
@@ -211,6 +152,81 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
 
         self.becomeFirstResponder()
     }
+    func detect(    )
+    {
+        self.subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+        imageOutput.captureStillImageAsynchronously(from: self.imageOutput.connection(with: .video)!) { (buffer, error) in
+            
+            guard buffer != nil else{return}
+            
+            let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer!)
+            let image = NSImage(data: imageData!)
+            
+            guard let rep = NSBitmapImageRep(data: imageData!) else{return}
+            
+            print("w:\(rep.pixelsWide),y:\(rep.pixelsHigh) ,size:\(rep.size)")
+            
+            let w = rep.pixelsWide
+            let h = rep.pixelsHigh
+            
+            var start  : CGPoint?
+            var end    : CGPoint?
+            var target : CGPoint? = nil//67,58,98   0.2627 0.2275  0.3843
+            
+            
+            for r in 550 ..< h
+            {
+                let row = 2436-r
+                for x in 1 ..< w
+                {
+                    if rep.isTarget(x: x, y: row) && (target == nil)
+                    {
+                        self.originPosition = CGPoint(x: x, y: 2436-(row+5))
+                        target = self.originPosition
+                        self.addPoint(color:NSColor.orange,point: self.originPosition!)
+                        break
+                    }
+                }
+            }
+            
+            for row in 550 ..< h
+            {
+                var startColor = rep.colorAt(x: 0, y: row)
+                for x in 1 ..< w
+                {
+                    let color = rep.colorAt(x: x, y: row)
+                    if (color?.different(with: startColor!))!
+                    {
+                        start = CGPoint(x: x, y: 2436-(row+5))
+                        startColor = rep.colorAt(x: x, y: row+5)!
+                        self.addPoint(color:NSColor.blue,point: start!)
+                        
+                        for y in row+5 ..< h
+                        {
+                            let color = rep.colorAt(x: x, y: y)!
+                            
+                            let edge = startColor!.different(with: color) &&
+                                startColor!.different(with: rep.colorAt(x: x, y: y+25)!)
+                            if (edge)
+                            {
+                                end = CGPoint(x: x, y: 2436-y+5)
+                                self.addPoint(color:NSColor.green,point: end!)
+                                
+                                let point = CGPoint(x: end!.x, y: end!.y+(start!.y-end!.y)/2)
+                                self.addPoint(color:NSColor.red,point: point)
+                                self.targetPosition = point
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    /*
     func getImage()
     {
         self.subviews.forEach { (view) in
@@ -306,6 +322,7 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
         //self.setNeedsDisplay(self.bounds)
         //self.needsDisplay = true
     }
+    */
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
@@ -371,5 +388,22 @@ extension NSColor
         return (fabsf(Float(self.redComponent - color.redComponent)) +
             fabsf(Float(self.greenComponent - color.greenComponent)) +
             fabsf(Float(self.blueComponent - color.blueComponent))) > 0.15
+    }
+}
+extension NSBitmapImageRep
+{
+    func isTarget(x:Int,y:Int)  -> Bool
+    {
+        let color = self.colorAt(x: x, y: y)!
+        return (fabsf(Float(color.redComponent)-0.2627) < 0.05) &&
+        (fabsf(Float(color.greenComponent)-0.2275) < 0.05) &&
+        (fabsf(Float(color.blueComponent)-0.3843) < 0.05)
+    }
+    
+    func different(x1:Int,y1:Int,x2:Int,y2:Int)  -> Bool
+    {
+        let c1 = self.colorAt(x: x1, y: y1)!
+        let c2 = self.colorAt(x: x2, y: y2)!
+        return c1.different(with: c2)
     }
 }
