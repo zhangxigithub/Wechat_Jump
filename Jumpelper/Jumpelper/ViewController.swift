@@ -57,7 +57,7 @@ class ViewController: NSViewController,EngraveRobotDelegate
         let y2 =  preview!.targetPosition!.y
         print(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)))
         
-        let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)) * 1.2)
+        let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)) * 1.35)
         
         let op = String(format:"m%4d#",value)
         robot.send(message: op)
