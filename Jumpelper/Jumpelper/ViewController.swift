@@ -9,9 +9,23 @@
 import Cocoa
 import CoreMediaIO
 import AVFoundation
+import QuartzCore
 
-class ViewController: NSViewController
+class ViewController: NSViewController,EngraveRobotDelegate
 {
+    func didConnected() {
+        print("didConnected")
+    }
+    
+    func didDisconnected() {
+        print("didDisconnected")
+    }
+    
+    func didReceviveMessgae(message: String) {
+        print(message)
+    }
+    
+    var robot : EngraveRobot!
     var preview : PreviewView?
 
     override func viewDidLoad() {
@@ -29,7 +43,31 @@ class ViewController: NSViewController
         
         }
     }
+    @IBAction func jump(_ sender: Any) {
+        
+        
+        
+        print(preview?.targetPosition)
+        print(preview?.originPosition)
+        
+        
+        let x1 =  preview!.originPosition!.x
+        let y1 =  preview!.originPosition!.y
+        let x2 =  preview!.targetPosition!.x
+        let y2 =  preview!.targetPosition!.y
+        print(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)))
+        
+        let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)))
+        
+        let op = String(format:"m%4d#",value)
+        robot.send(message: op)
+    }
     
+    @IBAction func connect(_ sender: Any) {
+        robot = EngraveRobot()
+        robot.delegate = self
+        robot.connect()
+    }
     
     @IBAction func test(_ sender: Any) {
         
@@ -95,6 +133,8 @@ class ViewController: NSViewController
     }
     
     @IBAction func step(_ sender: Any) {
+        
+        robot.send(message: "m1000#")
     }
     
     
@@ -130,6 +170,11 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
     var preview : AVCaptureVideoPreviewLayer?
     var imageOutput : AVCaptureStillImageOutput!
     
+    
+    var originPosition : CGPoint?
+    var targetPosition : CGPoint?
+    
+    
     init(frame frameRect: NSRect,device:AVCaptureDevice) {
         super.init(frame: frameRect)
         self.wantsLayer = true
@@ -164,6 +209,7 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
         
         session?.startRunning()
 
+        self.becomeFirstResponder()
     }
     func getImage()
     {
@@ -188,9 +234,9 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
             //w:Optional(1126),y:Optional(2436)
             
             print(rep.size)
-            print(rep.colorAt(x: 10, y: 10))
-            let c1 = rep.colorAt(x: 884, y: 1513)
-            let c2 = rep.colorAt(x: 418, y: 901)
+            //print(rep.colorAt(x: 10, y: 10))
+            //let c1 = rep.colorAt(x: 884, y: 1513)
+            //let c2 = rep.colorAt(x: 418, y: 901)
             
             let w = rep.pixelsWide
             let h = rep.pixelsHigh
@@ -212,12 +258,8 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
                        (target == nil)
                     {
                         target = CGPoint(x: x, y: 2436-(row+5))
-                        DispatchQueue.main.async {
-                            let tip = NSView(frame: NSRect(x: target!.x/3-5, y: target!.y/3-5, width: 10, height: 10))
-                            tip.wantsLayer = true
-                            tip.layer?.backgroundColor = NSColor.orange.cgColor
-                            self.addSubview(tip)
-                        }
+                        self.originPosition = target
+                        self.addPoint(color:NSColor.orange,point: target!)
                         break;
                     }
 
@@ -234,37 +276,23 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
                     {
                         print("start in \(x/3),\(row/3)")
                         start = CGPoint(x: x, y: 2436-(row+5))
-                        startColor = rep.colorAt(x: x, y: row+5)
-                        DispatchQueue.main.async {
-                            let tip = NSView(frame: NSRect(x: start!.x/3-5, y: start!.y/3-5, width: 10, height: 10))
-                            tip.wantsLayer = true
-                            tip.layer?.backgroundColor = NSColor.blue.cgColor
-                            self.addSubview(tip)
-                        }
+                        startColor = rep.colorAt(x: x, y: row+5)!
+                        self.addPoint(color:NSColor.blue,point: start!)
+                        
                         for y in row+5 ..< h
                         {
-                            let color = rep.colorAt(x: x, y: y)
-                            if (color?.different(with: startColor!))!
+                            let color = rep.colorAt(x: x, y: y)!
+                            
+                            let edge = startColor!.different(with: color) &&
+                                       startColor!.different(with: rep.colorAt(x: x, y: y+25)!)
+                            if (edge)
                             {
                                 end = CGPoint(x: x, y: 2436-y+5)
-                                DispatchQueue.main.async {
-                                    let tip = NSView(frame: NSRect(x: end!.x/3-5, y: end!.y/3-5, width: 10, height: 10))
-                                    tip.wantsLayer = true
-                                    tip.layer?.backgroundColor = NSColor.green.cgColor
-                                    
-                                    self.addSubview(tip)
-                                }
-                                let point = CGPoint(x: end!.x, y: end!.y+(start!.y-end!.y)/2)
-                                print(point)
+                                self.addPoint(color:NSColor.green,point: end!)
                                 
-                                DispatchQueue.main.async {
-                                    let tip = NSView(frame: NSRect(x: point.x/3-5, y: point.y/3-5, width: 10, height: 10))
-                                    tip.wantsLayer = true
-                                    tip.layer?.backgroundColor = NSColor.red.cgColor
-                                    
-                                    self.addSubview(tip)
-                                }
-
+                                let point = CGPoint(x: end!.x, y: end!.y+(start!.y-end!.y)/2)
+                                self.addPoint(color:NSColor.red,point: point)
+                                self.targetPosition = point
                                 return
                             }
                         }
@@ -272,8 +300,42 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
                 }
             }
         }
-            
+        
+        
+        
+        //self.setNeedsDisplay(self.bounds)
+        //self.needsDisplay = true
     }
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+        
+//        if originPosition != nil && targetPosition != nil
+//        {
+//            let figure = NSBezierPath() // container for line(s)
+//            figure.move(to: originPosition!) // start point
+//            figure.line(to: targetPosition!) // destination
+//            figure.lineWidth = 5  // hair line
+//            figure.stroke()  // draw line(s) in color
+//        }
+    }
+    override func mouseDown(with event: NSEvent) {
+        
+        var p = event.locationInWindow
+        p.x *= 3
+        p.y *= 3
+        addPoint(color: NSColor.red, point: p)
+    }
+    
+    func addPoint(color:NSColor,point:CGPoint)
+    {
+        DispatchQueue.main.async {
+            let tip = NSView(frame: NSRect(x: point.x/3-5, y: point.y/3-5, width: 10, height: 10))
+            tip.wantsLayer = true
+            tip.layer?.backgroundColor = color.cgColor
+            self.addSubview(tip)
+        }
+    }
+    
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if let buffer : CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) //as? CVPixelBuffer
@@ -308,6 +370,6 @@ extension NSColor
     {
         return (fabsf(Float(self.redComponent - color.redComponent)) +
             fabsf(Float(self.greenComponent - color.greenComponent)) +
-            fabsf(Float(self.blueComponent - color.blueComponent))) > 0.2
+            fabsf(Float(self.blueComponent - color.blueComponent))) > 0.15
     }
 }
