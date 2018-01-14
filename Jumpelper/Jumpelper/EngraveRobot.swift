@@ -156,9 +156,9 @@ class EngraveRobot : NSObject,CBCentralManagerDelegate,CBPeripheralDelegate {
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("didConnect")
         print(peripheral)
-        if peripheral.name == "ZHANGXI"
+        if peripheral.name == "CC41-A"
         {
-            self.delegate?.didDisconnected()
+            self.delegate?.didConnected()
         }
         peripheral.discoverServices(nil)
     }

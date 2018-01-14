@@ -15,10 +15,12 @@ class ViewController: NSViewController,EngraveRobotDelegate
 {
     func didConnected() {
         print("didConnected")
+        self.view.viewWithTag(1)?.isHidden = false
     }
     
     func didDisconnected() {
         print("didDisconnected")
+        self.view.viewWithTag(1)?.isHidden = true
     }
     
     func didReceviveMessgae(message: String) {
@@ -35,6 +37,11 @@ class ViewController: NSViewController,EngraveRobotDelegate
         var allow : UInt32 = 1
         let sizeOfAllow = MemoryLayout<UInt32>.size
         CMIOObjectSetPropertyData(CMIOObjectID(kCMIOObjectSystemObject), &property, 0, nil, UInt32(sizeOfAllow), &allow)
+        
+        
+        robot = EngraveRobot()
+        robot.delegate = self
+        robot.connect()
         
     }
 
@@ -60,7 +67,7 @@ class ViewController: NSViewController,EngraveRobotDelegate
         let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)) * 1.35)
         
         let op = String(format:"m%4d#",value)
-        robot.send(message: op)
+        robot?.send(message: op)
     }
     
     @IBAction func connect(_ sender: Any) {
@@ -75,7 +82,7 @@ class ViewController: NSViewController,EngraveRobotDelegate
     
     @IBAction func step(_ sender: Any) {
         
-        robot.send(message: "m1000#")
+        robot?.send(message: "m1000#")
     }
     
     
