@@ -769,8 +769,48 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="bluetooth" id="flL-E0-fqn"/>
                             </imageView>
+                            <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="reO-nP-xvP">
+                                <rect key="frame" x="372" y="650" width="118" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="1.5" doubleValue="1.25" tickMarkPosition="above" sliderType="linear" id="wvF-Bg-IEn"/>
+                                <connections>
+                                    <action selector="changed:" target="XfG-lQ-9wD" id="hV0-9T-EhZ"/>
+                                </connections>
+                            </slider>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K2c-6Z-ZFd">
+                                <rect key="frame" x="377" y="617" width="80" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="Nkw-W8-uAd">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ywe-yh-sKZ">
+                                <rect key="frame" x="374" y="469" width="116" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="3" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="kwT-X4-oFi"/>
+                                <connections>
+                                    <action selector="testChange:" target="XfG-lQ-9wD" id="T9w-Z0-5Vt"/>
+                                </connections>
+                            </slider>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cjk-my-x3S">
+                                <rect key="frame" x="376" y="435" width="106" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="cob-ai-XBh">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="rate" destination="K2c-6Z-ZFd" id="nUi-ZU-ttV"/>
+                        <outlet property="slider" destination="reO-nP-xvP" id="J56-Yf-gG4"/>
+                        <outlet property="testLabel" destination="Cjk-my-x3S" id="hiu-ui-TUe"/>
+                        <outlet property="testSlider" destination="Ywe-yh-sKZ" id="Rg3-sY-S4B"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

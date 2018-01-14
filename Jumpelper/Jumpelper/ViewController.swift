@@ -30,6 +30,23 @@ class ViewController: NSViewController,EngraveRobotDelegate
     var robot : EngraveRobot!
     var preview : PreviewView?
 
+    @IBOutlet weak var slider: NSSlider!
+    @IBOutlet weak var rate: NSTextField!
+    
+    
+    @IBOutlet weak var testSlider: NSSlider!
+    
+    @IBOutlet weak var testLabel: NSTextField!
+    
+    
+    @IBAction func testChange(_ sender: Any) {
+        testLabel.stringValue = testSlider.stringValue
+    }
+    @IBAction func changed(_ sender: Any) {
+        
+        rate.stringValue = slider.stringValue
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,7 +81,8 @@ class ViewController: NSViewController,EngraveRobotDelegate
         let y2 =  preview!.targetPosition!.y
         print(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)))
         
-        let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)) * 1.2)
+        let a = (x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)
+        let value = Int(sqrt(a) * CGFloat(slider.doubleValue))
         
         let op = String(format:"m%4d#",value)
         robot?.send(message: op)
@@ -82,7 +100,12 @@ class ViewController: NSViewController,EngraveRobotDelegate
     
     @IBAction func step(_ sender: Any) {
         
-        robot?.send(message: "m1000#")
+        //robot?.send(message: "m1000#")
+        
+        let value = Int(CGFloat(testSlider.doubleValue*1000))
+        
+        let op = String(format:"m%4d#",value)
+        robot?.send(message: op)
     }
     
     
