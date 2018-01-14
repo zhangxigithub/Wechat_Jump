@@ -39,9 +39,9 @@ class ViewController: NSViewController,EngraveRobotDelegate
         CMIOObjectSetPropertyData(CMIOObjectID(kCMIOObjectSystemObject), &property, 0, nil, UInt32(sizeOfAllow), &allow)
         
         
-        robot = EngraveRobot()
-        robot.delegate = self
-        robot.connect()
+        //robot = EngraveRobot()
+        //robot.delegate = self
+        //robot.connect()
         
     }
 
@@ -64,7 +64,7 @@ class ViewController: NSViewController,EngraveRobotDelegate
         let y2 =  preview!.targetPosition!.y
         print(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)))
         
-        let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)) * 1.35)
+        let value = Int(sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)) * 1.2)
         
         let op = String(format:"m%4d#",value)
         robot?.send(message: op)
@@ -126,9 +126,7 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
     init(frame frameRect: NSRect,device:AVCaptureDevice) {
         super.init(frame: frameRect)
         self.wantsLayer = true
-        
-        
-        
+
         session = AVCaptureSession()
         do {
             try input = AVCaptureDeviceInput(device: device)
@@ -153,13 +151,11 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
         
         self.layer?.addSublayer(preview!)
         
-        
-        
         session?.startRunning()
 
         self.becomeFirstResponder()
     }
-    func detect(    )
+    func detect()
     {
         self.subviews.forEach { (view) in
             view.removeFromSuperview()
@@ -333,18 +329,7 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
         //self.needsDisplay = true
     }
     */
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-        
-//        if originPosition != nil && targetPosition != nil
-//        {
-//            let figure = NSBezierPath() // container for line(s)
-//            figure.move(to: originPosition!) // start point
-//            figure.line(to: targetPosition!) // destination
-//            figure.lineWidth = 5  // hair line
-//            figure.stroke()  // draw line(s) in color
-//        }
-    }
+
     override func mouseDown(with event: NSEvent) {
         
         var p = event.locationInWindow
@@ -355,6 +340,15 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
         targetPosition = p;
     }
     
+    override func rightMouseDown(with event: NSEvent) {
+        
+        var p = event.locationInWindow
+        p.x *= 3
+        p.y *= 3
+        addPoint(color: NSColor.orange, point: p)
+        
+        originPosition = p;
+    }
     func addPoint(color:NSColor,point:CGPoint)
     {
         DispatchQueue.main.async {
@@ -367,12 +361,6 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
     
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        if let buffer : CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) //as? CVPixelBuffer
-        {
-
-        
-            
-        }
         
     }
 
