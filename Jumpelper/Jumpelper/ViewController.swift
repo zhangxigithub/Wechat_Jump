@@ -176,6 +176,7 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
             var target : CGPoint? = nil//67,58,98   0.2627 0.2275  0.3843
             
             
+            //detect piece
             for r in 550 ..< h
             {
                 let row = 2436-r
@@ -190,6 +191,7 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
                     }
                 }
             }
+
             
             for row in 550 ..< h
             {
@@ -198,20 +200,21 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
                 {
                     let color = rep.colorAt(x: x, y: row)
                     if (color?.different(with: startColor!))!
-                    {
+                    {//上顶点，往下走500px向上检测
                         start = CGPoint(x: x, y: 2436-(row+5))
-                        startColor = rep.colorAt(x: x, y: row+5)!
+                        startColor = rep.colorAt(x: x, y: row+505)!
                         self.addPoint(color:NSColor.blue,point: start!)
-                        
-                        for y in row+5 ..< h
+                        self.addPoint(color:NSColor.gray,point: CGPoint(x: x, y: 2436-(row+505)))
+                        for yy in 1 ..< (row+505)
                         {
+                            let y = (row+505) - yy
                             let color = rep.colorAt(x: x, y: y)!
-                            
-                            let edge = startColor!.different(with: color) &&
-                                startColor!.different(with: rep.colorAt(x: x, y: y+25)!)
+                            let edge = startColor!.different(with: color)
+                            //self.addPoint(color:NSColor.gray,point: CGPoint(x: x, y: 2436-(y)))
+                                //&& startColor!.different(with: rep.colorAt(x: x, y: y+25)!)
                             if (edge)
                             {
-                                end = CGPoint(x: x, y: 2436-y+5)
+                                end = CGPoint(x: x, y: 2436-(y-153+5))
                                 self.addPoint(color:NSColor.green,point: end!)
                                 
                                 let point = CGPoint(x: end!.x, y: end!.y+(start!.y-end!.y)/2)
@@ -341,6 +344,8 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
         p.x *= 3
         p.y *= 3
         addPoint(color: NSColor.red, point: p)
+        
+        targetPosition = p;
     }
     
     func addPoint(color:NSColor,point:CGPoint)
@@ -405,5 +410,12 @@ extension NSBitmapImageRep
         let c1 = self.colorAt(x: x1, y: y1)!
         let c2 = self.colorAt(x: x2, y: y2)!
         return c1.different(with: c2)
+    }
+    func isWhiteTarget(x:Int,y:Int)  -> Bool
+    {
+        let color = self.colorAt(x: x, y: y)!
+        return (fabsf(Float(color.redComponent)-0.96) < 0.01) &&
+            (fabsf(Float(color.greenComponent)-0.96) < 0.01) &&
+            (fabsf(Float(color.blueComponent)-0.96) < 0.01)
     }
 }
