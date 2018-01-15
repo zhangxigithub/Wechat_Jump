@@ -132,6 +132,10 @@ class ViewController: NSViewController,EngraveRobotDelegate
         self.view.addSubview(preview!)
     }
     
+    
+    
+    
+    
 }
 
 
