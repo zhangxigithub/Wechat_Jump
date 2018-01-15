@@ -13,6 +13,7 @@
 		336CE1D21FFC5EF8005B3430 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CE1D11FFC5EF8005B3430 /* ViewController.swift */; };
 		336CE1D41FFC5EF8005B3430 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 336CE1D31FFC5EF8005B3430 /* Assets.xcassets */; };
 		336CE1D71FFC5EF8005B3430 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336CE1D51FFC5EF8005B3430 /* Main.storyboard */; };
+		33E2B48B200C3C1900A1E24D /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E2B48A200C3C1900A1E24D /* PreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		336CE1D61FFC5EF8005B3430 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		336CE1D81FFC5EF8005B3430 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		336CE1D91FFC5EF8005B3430 /* Jumpelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jumpelper.entitlements; sourceTree = "<group>"; };
+		33E2B48A200C3C1900A1E24D /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				336CE1CF1FFC5EF8005B3430 /* AppDelegate.swift */,
 				335052F3200A41CF002BD52E /* EngraveRobot.swift */,
 				336CE1D11FFC5EF8005B3430 /* ViewController.swift */,
+				33E2B48A200C3C1900A1E24D /* PreviewView.swift */,
 				335052F5200B188A002BD52E /* Detect.swift */,
 				336CE1D31FFC5EF8005B3430 /* Assets.xcassets */,
 				336CE1D51FFC5EF8005B3430 /* Main.storyboard */,
@@ -145,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33E2B48B200C3C1900A1E24D /* PreviewView.swift in Sources */,
 				335052F6200B188A002BD52E /* Detect.swift in Sources */,
 				335052F4200A41CF002BD52E /* EngraveRobot.swift in Sources */,
 				336CE1D21FFC5EF8005B3430 /* ViewController.swift in Sources */,
