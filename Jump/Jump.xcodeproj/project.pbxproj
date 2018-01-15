@@ -19,7 +19,7 @@
 /* Begin PBXFileReference section */
 		335052F3200A41CF002BD52E /* EngraveRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngraveRobot.swift; sourceTree = "<group>"; };
 		335052F5200B188A002BD52E /* Detect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Detect.swift; sourceTree = "<group>"; };
-		336CE1CC1FFC5EF8005B3430 /* Jumpelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumpelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		336CE1CC1FFC5EF8005B3430 /* Jump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		336CE1CF1FFC5EF8005B3430 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		336CE1D11FFC5EF8005B3430 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		336CE1D31FFC5EF8005B3430 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,7 +43,7 @@
 		336CE1C31FFC5EF8005B3430 = {
 			isa = PBXGroup;
 			children = (
-				336CE1CE1FFC5EF8005B3430 /* Jumpelper */,
+				336CE1CE1FFC5EF8005B3430 /* Jump */,
 				336CE1CD1FFC5EF8005B3430 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,12 +51,12 @@
 		336CE1CD1FFC5EF8005B3430 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				336CE1CC1FFC5EF8005B3430 /* Jumpelper.app */,
+				336CE1CC1FFC5EF8005B3430 /* Jump.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		336CE1CE1FFC5EF8005B3430 /* Jumpelper */ = {
+		336CE1CE1FFC5EF8005B3430 /* Jump */ = {
 			isa = PBXGroup;
 			children = (
 				336CE1CF1FFC5EF8005B3430 /* AppDelegate.swift */,
@@ -69,15 +69,15 @@
 				336CE1D81FFC5EF8005B3430 /* Info.plist */,
 				336CE1D91FFC5EF8005B3430 /* Jumpelper.entitlements */,
 			);
-			path = Jumpelper;
+			path = Jump;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		336CE1CB1FFC5EF8005B3430 /* Jumpelper */ = {
+		336CE1CB1FFC5EF8005B3430 /* Jump */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 336CE1DC1FFC5EF8005B3430 /* Build configuration list for PBXNativeTarget "Jumpelper" */;
+			buildConfigurationList = 336CE1DC1FFC5EF8005B3430 /* Build configuration list for PBXNativeTarget "Jump" */;
 			buildPhases = (
 				336CE1C81FFC5EF8005B3430 /* Sources */,
 				336CE1C91FFC5EF8005B3430 /* Frameworks */,
@@ -87,9 +87,9 @@
 			);
 			dependencies = (
 			);
-			name = Jumpelper;
+			name = Jump;
 			productName = Jumpelper;
-			productReference = 336CE1CC1FFC5EF8005B3430 /* Jumpelper.app */;
+			productReference = 336CE1CC1FFC5EF8005B3430 /* Jump.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -113,7 +113,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 336CE1C71FFC5EF8005B3430 /* Build configuration list for PBXProject "Jumpelper" */;
+			buildConfigurationList = 336CE1C71FFC5EF8005B3430 /* Build configuration list for PBXProject "Jump" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -126,7 +126,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				336CE1CB1FFC5EF8005B3430 /* Jumpelper */,
+				336CE1CB1FFC5EF8005B3430 /* Jump */,
 			);
 		};
 /* End PBXProject section */
@@ -283,9 +283,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 54TGPDSGF2;
-				INFOPLIST_FILE = Jumpelper/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Jump/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.zhangxi.Jumpelper;
+				PRODUCT_BUNDLE_IDENTIFIER = me.zhangxi.jump;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -298,9 +298,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 54TGPDSGF2;
-				INFOPLIST_FILE = Jumpelper/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Jump/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.zhangxi.Jumpelper;
+				PRODUCT_BUNDLE_IDENTIFIER = me.zhangxi.jump;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -309,7 +309,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		336CE1C71FFC5EF8005B3430 /* Build configuration list for PBXProject "Jumpelper" */ = {
+		336CE1C71FFC5EF8005B3430 /* Build configuration list for PBXProject "Jump" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				336CE1DA1FFC5EF8005B3430 /* Debug */,
@@ -318,7 +318,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		336CE1DC1FFC5EF8005B3430 /* Build configuration list for PBXNativeTarget "Jumpelper" */ = {
+		336CE1DC1FFC5EF8005B3430 /* Build configuration list for PBXNativeTarget "Jump" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				336CE1DD1FFC5EF8005B3430 /* Debug */,
