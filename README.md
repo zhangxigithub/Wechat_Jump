@@ -8,7 +8,7 @@
 * DIY电容笔: 隔音耳塞吸水,用导线接地
 
 ![Mac](https://raw.githubusercontent.com/zhangxigithub/Wechat_Jump/master/pic.png)
-![Arduino](https://raw.githubusercontent.com/zhangxigithub/Wechat_Jump/master/pic2.png)
+![Arduino](https://raw.githubusercontent.com/zhangxigithub/Wechat_Jump/master/pic2.JPG)
 
 2018.1.12
 基本完成简单的位置检测，纯色图形支持较好，复杂图形支持不够好，但是能找到上顶点。下一步完成机械部分先确认一下精度够不够
