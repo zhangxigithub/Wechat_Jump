@@ -7,7 +7,7 @@
 * 通信: 蓝牙
 * DIY电容笔: 隔音耳塞吸水,用导线接地
 
-
+![https://raw.githubusercontent.com/zhangxigithub/Wechat_Jump/master/pic.png]
 
 2018.1.12
 基本完成简单的位置检测，纯色图形支持较好，复杂图形支持不够好，但是能找到上顶点。下一步完成机械部分先确认一下精度够不够
@@ -21,3 +21,5 @@
 2018.1.15
 耳塞泡水触控受干湿度的影响太大了，该用铝箔纸做触控笔后，效果还比较稳定，玩到了1000分。
 https://youtu.be/DsFWsGPrE-M
+
+
