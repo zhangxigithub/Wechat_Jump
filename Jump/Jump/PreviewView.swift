@@ -220,10 +220,32 @@ extension NSBitmapImageRep
 {
     func isTarget(x:Int,y:Int)  -> Bool
     {
+        guard  x > 38,x < 1000 else {
+            return false
+        }
+        
+        
+        let left   = (43,43,71) //- 38
+        let center = (56,56,93)
+        let right = (54,57,79) //+ 38
+        
+
         let color = self.colorAt(x: x, y: y)!
-        return (fabsf(Float(color.redComponent)-0.2627) < 0.05) &&
-            (fabsf(Float(color.greenComponent)-0.2275) < 0.05) &&
-            (fabsf(Float(color.blueComponent)-0.3843) < 0.05)
+        let aim1 = (fabsf(Float(color.redComponent)-(Float(center.0)/255)) < 0.05) &&
+                   (fabsf(Float(color.greenComponent)-(Float(center.1)/255)) < 0.05) &&
+                   (fabsf(Float(color.blueComponent)-(Float(center.2)/255)) < 0.05)
+        
+        let color2 = self.colorAt(x: x-38, y: y)!
+        let aim2 = (fabsf(Float(color2.redComponent)-(Float(left.0)/255)) < 0.05) &&
+            (fabsf(Float(color2.greenComponent)-(Float(left.1)/255)) < 0.05) &&
+            (fabsf(Float(color2.blueComponent)-(Float(left.2)/255)) < 0.05)
+        
+        let color3 = self.colorAt(x: x+38, y: y)!
+        let aim3 = (fabsf(Float(color3.redComponent)-(Float(right.0)/255)) < 0.05) &&
+            (fabsf(Float(color3.greenComponent)-(Float(right.1)/255)) < 0.05) &&
+            (fabsf(Float(color3.blueComponent)-(Float(right.2)/255)) < 0.05)
+
+        return aim1 && aim2 && aim3
     }
     
     func different(x1:Int,y1:Int,x2:Int,y2:Int)  -> Bool
