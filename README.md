@@ -7,6 +7,7 @@
 * 通信: 蓝牙
 * DIY电容笔: 隔音耳塞吸水,用导线接地
 
+![Arduino](https://raw.githubusercontent.com/zhangxigithub/Wechat_Jump/master/pic3.JPG)
 ![Mac](https://raw.githubusercontent.com/zhangxigithub/Wechat_Jump/master/pic.png)
 ![Arduino](https://raw.githubusercontent.com/zhangxigithub/Wechat_Jump/master/pic2.JPG)
 
