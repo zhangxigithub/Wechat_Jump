@@ -1,11 +1,17 @@
-# Wechat_Jump
+# 微信跳一跳外挂
 
 
-* 捕获iPhone屏幕(https://developer.apple.com/videos/play/wwdc2014/508/  )
+
+* AVCapture捕获iPhone屏幕(https://developer.apple.com/videos/play/wwdc2014/508/  )
 * 解析坐标：手动扫描像素点查找上下顶点
 * 控制触手: Arduino+舵机
 * 通信: 蓝牙
-* DIY电容笔: 隔音耳塞吸水,用导线接地
+* 电容笔: 淘宝3.8包邮买的(DIY的效果不好，一开始用海绵蘸水，不稳定，铝箔太硬，接触不稳定)
+
+2018.1.17
+电容笔到了，基本完成，精度基本满意，连续跳到中心最多能达到20次。
+* [iPhone演示](https://youtu.be/IY3LUXc-2dg)
+* [Mac演示](https://youtu.be/4C_StpnPUC0)
 
 2018.1.16
 现在触控时间是一个y=ax的函数，考虑到舵机有响应时间，应该是y=ax+b，需要测量下舵机的实际响应时间，求出b。

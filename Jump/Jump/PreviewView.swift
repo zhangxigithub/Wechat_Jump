@@ -111,21 +111,21 @@ class PreviewView : NSView , AVCaptureVideoDataOutputSampleBufferDelegate
             }
             
             //优先查找白点
-            for row in 550 ..< Int((self.originPosition != nil) ? (2436 - self.originPosition!.y - 5) : 2436)
-            {
-                var startColor = rep.colorAt(x: 0, y: row)
-                for x in 1 ..< w
-                {
-                    if rep.isWhiteTarget(x: x, y: row)
-                    {
-                        self.targetPosition = CGPoint(x: x, y: 2436-(row+5))
-                        DispatchQueue.main.async {
-                            self.targetView = self.addPoint(color:NSColor.red,point: self.targetPosition!)
-                        }
-                        return
-                    }
-                }
-            }
+//            for row in 550 ..< Int((self.originPosition != nil) ? (2436 - self.originPosition!.y - 5) : 2436)
+//            {
+//                var startColor = rep.colorAt(x: 0, y: row)
+//                for x in 1 ..< w
+//                {
+//                    if rep.isWhiteTarget(x: x, y: row)
+//                    {
+//                        self.targetPosition = CGPoint(x: x, y: 2436-(row+5))
+//                        DispatchQueue.main.async {
+//                            self.targetView = self.addPoint(color:NSColor.red,point: self.targetPosition!)
+//                        }
+//                        return
+//                    }
+//                }
+//            }
             //没有白点，根据轮廓判断
             for row in 550 ..< h
             {
@@ -251,12 +251,12 @@ extension NSBitmapImageRep
                    (fabsf(Float(color.greenComponent)-(Float(center.1)/255)) < 0.05) &&
                    (fabsf(Float(color.blueComponent)-(Float(center.2)/255)) < 0.05)
         
-        let color2 = self.colorAt(x: x-38, y: y)!
+        let color2 = self.colorAt(x: x-36, y: y)!
         let aim2 = (fabsf(Float(color2.redComponent)-(Float(left.0)/255)) < 0.05) &&
             (fabsf(Float(color2.greenComponent)-(Float(left.1)/255)) < 0.05) &&
             (fabsf(Float(color2.blueComponent)-(Float(left.2)/255)) < 0.05)
         
-        let color3 = self.colorAt(x: x+38, y: y)!
+        let color3 = self.colorAt(x: x+36, y: y)!
         let aim3 = (fabsf(Float(color3.redComponent)-(Float(right.0)/255)) < 0.05) &&
             (fabsf(Float(color3.greenComponent)-(Float(right.1)/255)) < 0.05) &&
             (fabsf(Float(color3.blueComponent)-(Float(right.2)/255)) < 0.05)

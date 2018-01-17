@@ -31,7 +31,7 @@ void loop() {
   {
     int x      = op.substring(1,5).toInt();
 
-    servo.write(155);
+    servo.write(159);
     delay(x);
     servo.write(152);
   }

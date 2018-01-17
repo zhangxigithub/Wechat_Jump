@@ -107,7 +107,7 @@ class ViewController: NSViewController,EngraveRobotDelegate
         
         //robot?.send(message: "m1000#")
         
-        let value = Int(CGFloat(testSlider.doubleValue*1000))
+        let value = Int(CGFloat(testSlider.doubleValue*1000)+40)
         
         let op = String(format:"m%4d#",value)
         robot?.send(message: op)
